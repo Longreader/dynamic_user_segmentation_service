@@ -8,6 +8,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary      GetSegmentID
+// @Description  Search for segment in database
+// @Tags         segments
+// @Produce      json
+// @Param        segment   path      string  true  "Segment name"
+// @Success      200  {int}		integer	"Segment ID"
+// @Failure      400  {object}  errorResponse
+// @Failure      404  {object}	errorResponse
+// @Failure      500  {object}  errorResponse
+// @Router       /segments/{segment} [get]
 func (h *Handler) getSegment(c *gin.Context) {
 	// GET обработчик запроса получения segment
 
@@ -20,7 +30,7 @@ func (h *Handler) getSegment(c *gin.Context) {
 		return
 	}
 
-	sgmtOut, err := h.services.SegmentInterface.GetSegment(input)
+	sgmtIDOut, err := h.services.SegmentInterface.GetSegment(input)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
 			c.JSON(http.StatusOK, map[string]interface{}{
@@ -34,10 +44,21 @@ func (h *Handler) getSegment(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"segment": sgmtOut,
+		"segment": sgmtIDOut,
 	})
 }
 
+// @Summary      CreateSegment
+// @Description  Create a new segments
+// @Tags         segments
+// @Accept       json
+// @Produce      json
+// @Param        input	body	models.Segment  true  "Segment name"
+// @Success      200  {int}  integer "Segment ID"
+// @Failure      400  {object}  errorResponse
+// @Failure      404  {object}  errorResponse
+// @Failure      500  {object}  errorResponse
+// @Router       /segments/ [post]
 func (h *Handler) postSegment(c *gin.Context) {
 	// POST обработчик запроса создания объекта segment
 
@@ -60,6 +81,16 @@ func (h *Handler) postSegment(c *gin.Context) {
 
 }
 
+// @Summary      DelSegment
+// @Description  Full delete segment from database
+// @Tags         segments
+// @Produce      json
+// @Param        segment   path      string  true  "Segment name"
+// @Success      200  {string}		string	"OK"
+// @Failure      400  {object}  errorResponse
+// @Failure      404  {object}	errorResponse
+// @Failure      500  {object}  errorResponse
+// @Router       /segments/{segment} [delete]
 func (h *Handler) deleteSegment(c *gin.Context) {
 	// DELETE обработчик запроса удаления объекта segment
 
@@ -78,7 +109,7 @@ func (h *Handler) deleteSegment(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"deleted": "true",
+		"status": "OK",
 	})
 
 }

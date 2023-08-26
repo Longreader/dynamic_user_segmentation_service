@@ -1,8 +1,13 @@
 package handlers
 
 import (
+	_ "github.com/Longreader/dynamic_user_segmentation_service.git/docs"
 	"github.com/Longreader/dynamic_user_segmentation_service.git/service"
 	"github.com/gin-gonic/gin"
+
+	// _ "github.com/swaggo/echo-swagger/example/docs"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Handler struct {
@@ -18,7 +23,9 @@ func (h *Handler) InitRouter() *gin.Engine {
 	// Подключение API Endpoints
 	r := gin.New()
 
-	api := r.Group("/api")
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	api := r.Group("/api/v1")
 	{
 		segment := api.Group("/segments")
 		{

@@ -25,14 +25,14 @@ func (s *SegmentPostgres) CreateSegment(sgmt models.Segment) (int, error) {
 	return id, nil
 }
 
-func (s *SegmentPostgres) GetSegment(sgmt models.Segment) (string, error) {
-	var sgmtOut string
-	query := fmt.Sprintf("SELECT segment FROM %s WHERE segment=$1", segmentsTable)
+func (s *SegmentPostgres) GetSegment(sgmt models.Segment) (int, error) {
+	var sgmtIDOut int
+	query := fmt.Sprintf("SELECT id FROM %s WHERE segment=$1", segmentsTable)
 	row := s.db.QueryRow(query, sgmt.Segment)
-	if err := row.Scan(&sgmtOut); err != nil {
-		return "", err
+	if err := row.Scan(&sgmtIDOut); err != nil {
+		return 0, err
 	}
-	return sgmtOut, nil
+	return sgmtIDOut, nil
 }
 
 func (s *SegmentPostgres) DeleteSegment(sgmt models.Segment) error {

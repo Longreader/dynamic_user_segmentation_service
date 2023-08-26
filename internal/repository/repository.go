@@ -7,7 +7,7 @@ import (
 
 type SegmentInterface interface {
 	CreateSegment(sgmt models.Segment) (int, error)
-	GetSegment(sgmt models.Segment) (string, error)
+	GetSegment(sgmt models.Segment) (int, error)
 	DeleteSegment(sgmt models.Segment) error
 }
 
