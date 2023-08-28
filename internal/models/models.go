@@ -9,9 +9,9 @@ type (
 		Segment string `json:"segment"`
 	}
 
-	UserSegment struct {
-		UserId   int    `json:"user_id"`
-		Segments string `json:"segments"`
+	UserSegments struct {
+		UserId   int      `json:"user_id"`
+		Segments []string `json:"segments"`
 	}
 
 	UserSetSegment struct {

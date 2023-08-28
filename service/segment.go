@@ -17,7 +17,7 @@ func (s *SegmentService) CreateSegment(sgmt models.Segment) (int, error) {
 	return s.repo.CreateSegment(sgmt)
 }
 
-func (s *SegmentService) GetSegment(sgmt models.Segment) (string, error) {
+func (s *SegmentService) GetSegment(sgmt models.Segment) (int, error) {
 	return s.repo.GetSegment(sgmt)
 }
 

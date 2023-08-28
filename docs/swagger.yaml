@@ -1,0 +1,305 @@
+basePath: /api/v1
+definitions:
+  handlers.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  models.Segment:
+    properties:
+      segment:
+        type: string
+    type: object
+  models.User:
+    properties:
+      user_id:
+        type: integer
+    type: object
+  models.UserSegments:
+    properties:
+      segments:
+        items:
+          type: string
+        type: array
+      user_id:
+        type: integer
+    type: object
+  models.UserSetSegment:
+    properties:
+      segments_delete:
+        items:
+          type: string
+        type: array
+      segments_set:
+        items:
+          type: string
+        type: array
+      user_id:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: rokirokz@mail.ru
+    name: Alexey Kirichek
+    url: https://vk.com/luxferoanimus
+  description: This is a swagger docs for test API
+  title: Swagger Avito Backend Junior API
+  version: "1.0"
+paths:
+  /segments/:
+    post:
+      consumes:
+      - application/json
+      description: Create a new segments
+      parameters:
+      - description: Segment name
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Segment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Segment ID
+          schema:
+            type: int
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: CreateSegment
+      tags:
+      - segments
+  /segments/{segment}:
+    delete:
+      description: Full delete segment from database
+      parameters:
+      - description: Segment name
+        in: path
+        name: segment
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: DelSegment
+      tags:
+      - segments
+    get:
+      description: Search for segment in database
+      parameters:
+      - description: Segment name
+        in: path
+        name: segment
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Segment ID
+          schema:
+            type: int
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: GetSegmentID
+      tags:
+      - segments
+  /users/:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: User outter ID
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User ID
+          schema:
+            type: int
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: CreateUser
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      description: Full delete user from database
+      parameters:
+      - description: User outter ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: DeleteUser
+      tags:
+      - users
+    get:
+      description: Search for user in database
+      parameters:
+      - description: User outter ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User ID
+          schema:
+            type: int
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: GetUser
+      tags:
+      - users
+  /users/acitve/{id}:
+    get:
+      description: Search for active segments of user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserSegments'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: UserSegments
+      tags:
+      - comparison
+  /users/add:
+    post:
+      consumes:
+      - application/json
+      description: Create/Delete users segments
+      parameters:
+      - description: Segments and User data
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserSetSegment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: UserSegments
+      tags:
+      - comparison
+swagger: "2.0"

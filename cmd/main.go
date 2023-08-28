@@ -15,6 +15,15 @@ import (
 	"github.com/spf13/viper"
 )
 
+// @title           Swagger Avito Backend Junior API
+// @version         1.0
+// @description     This is a swagger docs for test API
+// @contact.name   Alexey Kirichek
+// @contact.url    https://vk.com/luxferoanimus
+// @contact.email  rokirokz@mail.ru
+// @host      localhost:8080
+// @BasePath  /api/v1
+// @query.collection.format multi
 func main() {
 
 	log.SetFormatter(&log.JSONFormatter{})

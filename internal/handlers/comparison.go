@@ -9,6 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary      UserSegments
+// @Description  Create/Delete users segments
+// @Tags         comparison
+// @Accept       json
+// @Produce      json
+// @Param        input	body	models.UserSetSegment  true  "Segments and User data"
+// @Success      200  {string}  string "OK"
+// @Failure      400  {object}  errorResponse
+// @Failure      404  {object}  errorResponse
+// @Failure      500  {object}  errorResponse
+// @Router       /users/add [post]
 func (h *Handler) postComarison(c *gin.Context) {
 	var input models.UserSetSegment
 
@@ -24,14 +35,25 @@ func (h *Handler) postComarison(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"success": true,
+		"status": "OK",
 	})
 
 }
 
+// @Summary      UserSegments
+// @Description  Search for active segments of user
+// @Tags         comparison
+// @Produce      json
+// @Param        id   path      integer  true  "User ID"
+// @Success      200  {object}  models.UserSegments
+// @Failure      400  {object}  errorResponse
+// @Failure      404  {object}	errorResponse
+// @Failure      500  {object}  errorResponse
+// @Router       /users/acitve/{id} [get]
 func (h *Handler) getActive(c *gin.Context) {
 
 	var input models.User
+	var output models.UserSegments
 	var smgts []string
 
 	idStr := c.Param("id")
@@ -55,8 +77,9 @@ func (h *Handler) getActive(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"segments": smgts,
-	})
+	output.Segments = smgts
+	output.UserId = input.UserId
+
+	c.JSON(http.StatusOK, output)
 
 }
