@@ -5,3 +5,4 @@
 # Recommended: Go.AllowList.gitignore
 
 .env
+.database
