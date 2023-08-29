@@ -22,10 +22,15 @@ type ComparisonInterface interface {
 	GetActiveSegmnents(u models.User) ([]string, error)
 }
 
+type AuditInterface interface {
+	SendAuditInformation(date string) (string, error)
+}
+
 type Repository struct {
 	SegmentInterface
 	UserInterface
 	ComparisonInterface
+	AuditInterface
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
@@ -33,5 +38,6 @@ func NewRepository(db *sqlx.DB) *Repository {
 		SegmentInterface:    NewSegmentPostgres(db),
 		UserInterface:       NewUserPostgres(db),
 		ComparisonInterface: NewComparisonPostgres(db),
+		AuditInterface:      NewAuditStorage(),
 	}
 }

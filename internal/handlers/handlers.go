@@ -21,6 +21,9 @@ func NewHandler(services *service.Service) *Handler {
 func (h *Handler) InitRouter() *gin.Engine {
 	// Инициализация роутера приложения
 	// Подключение API Endpoints
+
+	// gin.SetMode(gin.ReleaseMode)
+
 	r := gin.New()
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
@@ -40,6 +43,10 @@ func (h *Handler) InitRouter() *gin.Engine {
 			user.DELETE("/:id", h.deleteUser)
 			user.POST("/add", h.postComarison)
 			user.GET("/active/:id", h.getActive)
+		}
+		utils := api.Group("/utils")
+		{
+			utils.GET("/audit/:date", h.dowloadAudit)
 		}
 
 	}

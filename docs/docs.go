@@ -406,6 +406,56 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/utils/audit/{date}": {
+            "get": {
+                "description": "Download history file by sent date",
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "utils"
+                ],
+                "summary": "DownloadAudic",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "MONTH-YEAR",
+                        "name": "date",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.errorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

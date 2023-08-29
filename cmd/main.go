@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/joho/godotenv"
@@ -26,14 +26,14 @@ import (
 // @query.collection.format multi
 func main() {
 
-	log.SetFormatter(&log.JSONFormatter{})
+	logrus.SetFormatter(&logrus.JSONFormatter{})
 
 	if err := initConfig(); err != nil {
-		log.Fatalf("Error at initializing config: %s", err.Error())
+		logrus.Fatalf("Error at initializing config: %s", err.Error())
 	}
 
 	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error at load environment passwords: %s", err.Error())
+		logrus.Fatalf("Error at load environment passwords: %s", err.Error())
 	}
 
 	db, err := repository.NewPostgresDB(repository.Config{
@@ -46,7 +46,7 @@ func main() {
 	})
 
 	if err != nil {
-		log.Fatalf("Error at database connection: %s", err.Error())
+		logrus.Fatalf("Error at database connection: %s", err.Error())
 	}
 
 	repositories := repository.NewRepository(db)
@@ -57,7 +57,7 @@ func main() {
 
 	http.Handle("/", r)
 
-	log.Fatal(http.ListenAndServe(viper.GetString("port"), r))
+	logrus.Fatal(http.ListenAndServe(viper.GetString("port"), r))
 }
 
 func initConfig() error {
