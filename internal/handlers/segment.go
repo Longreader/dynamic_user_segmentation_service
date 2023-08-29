@@ -71,8 +71,28 @@ func (h *Handler) postSegment(c *gin.Context) {
 
 	id, err := h.services.SegmentInterface.CreateSegment(input)
 	if err != nil {
-		newErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
+		if err.Error() != "ERROR: duplicate key value violates unique constraint \"segments_segment_key\" (SQLSTATE 23505)" {
+			newErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+	}
+
+	if (input.Persent != 0) && (input.Persent <= 100) {
+		usrs, err := h.services.UserInterface.GetRandUsers(input)
+		if err != nil {
+			newErrorResponse(c, http.StatusInternalServerError, err.Error())
+			return
+		}
+		for _, usr := range usrs {
+			err := h.services.ComparisonInterface.SetUserSegments(models.UserSetSegment{
+				SegmentsSet: []string{input.Segment},
+				UserId:      usr,
+			})
+			if err != nil {
+				newErrorResponse(c, http.StatusInternalServerError, err.Error())
+				return
+			}
+		}
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{

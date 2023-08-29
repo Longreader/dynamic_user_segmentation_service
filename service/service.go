@@ -14,6 +14,7 @@ type SegmentInterface interface {
 type UserInterface interface {
 	CreateUser(usr models.User) (int, error)
 	GetUser(usr models.User) (int, error)
+	GetRandUsers(s models.Segment) ([]int, error)
 	DeleteUser(usr models.User) error
 }
 

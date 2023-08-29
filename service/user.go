@@ -21,6 +21,10 @@ func (u *UserService) GetUser(usr models.User) (int, error) {
 	return u.repo.GetUser(usr)
 }
 
+func (u *UserService) GetRandUsers(s models.Segment) ([]int, error) {
+	return u.repo.GetRandUsers(s)
+}
+
 func (u *UserService) DeleteUser(usr models.User) error {
 	return u.repo.DeleteUser(usr)
 }
