@@ -152,9 +152,7 @@ func (c *ComparisonPostgres) GetComparisonIfExist(seg int, usr int) (int, error)
 
 func (c *ComparisonPostgres) DeleteComparisonIfExist(com int, seg int, usr int) error {
 	query := fmt.Sprintf(`DELETE FROM %s WHERE id=$1 AND segment_id=$2 AND user_id=$3`, comparisonTable)
-	fmt.Println("we gere")
-	res, err := c.db.Exec(query, com, seg, usr)
-	fmt.Println(res, err)
+	_, err := c.db.Exec(query, com, seg, usr)
 	return err
 }
 
@@ -207,8 +205,6 @@ func (c *ComparisonPostgres) SetUserSegments(uss models.UserSetSegment) error {
 			if err != nil {
 				return err
 			}
-
-			log.Info("DELETE", delID, compID, userToSet)
 
 			err = c.DeleteComparisonIfExist(compID, delID, userID)
 			if err != nil {

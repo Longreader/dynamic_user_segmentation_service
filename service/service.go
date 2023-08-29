@@ -22,10 +22,15 @@ type ComparisonInterface interface {
 	GetActiveSegmnents(u models.User) ([]string, error)
 }
 
+type AuditInterface interface {
+	SendAuditInformation(date string) (string, error)
+}
+
 type Service struct {
 	SegmentInterface
 	UserInterface
 	ComparisonInterface
+	AuditInterface
 }
 
 func NewService(repo *repository.Repository) *Service {
@@ -33,5 +38,6 @@ func NewService(repo *repository.Repository) *Service {
 		SegmentInterface:    NewSegmentService(repo.SegmentInterface),
 		UserInterface:       NewUserService(repo.UserInterface),
 		ComparisonInterface: NewComparisonService(repo.ComparisonInterface),
+		AuditInterface:      NewAuditService(repo.AuditInterface),
 	}
 }

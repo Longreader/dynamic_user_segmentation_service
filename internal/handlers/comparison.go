@@ -3,10 +3,13 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strconv"
+	"time"
 
 	"github.com/Longreader/dynamic_user_segmentation_service.git/internal/models"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 // @Summary      UserSegments
@@ -21,17 +24,40 @@ import (
 // @Failure      500  {object}  errorResponse
 // @Router       /users/add [post]
 func (h *Handler) postComarison(c *gin.Context) {
+
 	var input models.UserSetSegment
+
+	var newPath = fmt.Sprintf("./storage/%s", time.Now().Format("1-06"))
+	err := os.MkdirAll(newPath, os.ModePerm)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	var logPath = fmt.Sprintf("./storage/%s/%s.csv", time.Now().Format("1-06"), time.Now().Format("1-2-06"))
 
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	err := h.services.ComparisonInterface.SetUserSegments(input)
+	err = h.services.ComparisonInterface.SetUserSegments(input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
+	}
+
+	file, err := os.OpenFile(logPath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
+
+	if err != nil {
+		logrus.Error(err)
+	}
+	defer file.Close()
+
+	for _, i := range input.SegmentsSet {
+		file.WriteString(fmt.Sprintf("%d;%s;%s;%s;\n", input.UserId, i, "SET", time.Now().Format("1.2.06 3:4:5 -07 MST")))
+	}
+	for _, i := range input.SegmentsDelete {
+		file.WriteString(fmt.Sprintf("%d;%s;%s;%s;\n", input.UserId, i, "DELETE", time.Now().Format("1.2.06 3:4:5 -07 MST")))
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{

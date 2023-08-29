@@ -302,4 +302,37 @@ paths:
       summary: UserSegments
       tags:
       - comparison
+  /utils/audit/{date}:
+    get:
+      description: Download history file by sent date
+      parameters:
+      - description: MONTH-YEAR
+        in: path
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: integer
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handlers.errorResponse'
+      summary: DownloadAudic
+      tags:
+      - utils
 swagger: "2.0"
