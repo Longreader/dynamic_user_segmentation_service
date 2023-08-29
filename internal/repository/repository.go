@@ -13,12 +13,13 @@ type SegmentInterface interface {
 
 type UserInterface interface {
 	CreateUser(usr models.User) (int, error)
+	GetRandUsers(s models.Segment) ([]int, error)
 	GetUser(usr models.User) (int, error)
 	DeleteUser(usr models.User) error
 }
 
 type ComparisonInterface interface {
-	SetUserSegments(sl models.UserSetSegment) error
+	SetUserSegments(uss models.UserSetSegment) error
 	GetActiveSegmnents(u models.User) ([]string, error)
 }
 

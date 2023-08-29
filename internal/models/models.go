@@ -7,6 +7,7 @@ type (
 
 	Segment struct {
 		Segment string `json:"segment"`
+		Persent int    `json:"persent"`
 	}
 
 	UserSegments struct {
