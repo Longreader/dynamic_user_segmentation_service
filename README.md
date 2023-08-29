@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 
-<h1 align="center"><b>Dynamic user segmentation service<b></h1>
+<h1 align="center"><b>Dynamic user segmentation service</b></h1>
 <div>
   <p align="center">
     Dynamic user segmentation service for AvitoTech internship
@@ -62,10 +62,6 @@ This is an list of needed software and how to install them.
   ```
   ```sh
   systemctl start docker
-  ```
-* PostgreSQL (via Docker container)
-  ```sh
-  docker pull postgres
   ```
 * Migrate utilite
   ```sh
