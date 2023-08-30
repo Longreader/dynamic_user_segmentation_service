@@ -74,18 +74,17 @@ This is an list of needed software and how to install them.
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/github_username/repo_name.git
    ```
-3. Install software above
+2. Install software above
   
-4. Write the folow command
+3. Write the folow command
    ```
    make build && make run
    ```
-5. If service runs for first time, migrations must be done:
+4. If service runs for first time, migrations must be done:
    ```
    make migrate
    ```
