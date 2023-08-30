@@ -1,14 +1,17 @@
 package main
 
 import (
-	"net/http"
+	"context"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/sirupsen/logrus"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/joho/godotenv"
 
+	dynamicusersegmentation "github.com/Longreader/dynamic_user_segmentation_service.git"
 	"github.com/Longreader/dynamic_user_segmentation_service.git/internal/handlers"
 	"github.com/Longreader/dynamic_user_segmentation_service.git/internal/repository"
 	"github.com/Longreader/dynamic_user_segmentation_service.git/service"
@@ -53,11 +56,28 @@ func main() {
 	services := service.NewService(repositories)
 	h := handlers.NewHandler(services)
 
-	r := h.InitRouter()
+	srv := new(dynamicusersegmentation.Server)
+	go func() {
+		if err := srv.Run(viper.GetString("port"), h.InitRouter()); err != nil {
+			logrus.Fatalf("error occured while running http server: %s", err.Error())
+		}
+	}()
 
-	http.Handle("/", r)
+	logrus.Print("AvitoApp Started")
 
-	logrus.Fatal(http.ListenAndServe(viper.GetString("port"), r))
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	logrus.Print("AvitoApp Shutting Down")
+
+	if err := srv.Shutdown(context.Background()); err != nil {
+		logrus.Errorf("Error occured on server shutting down: %s", err.Error())
+	}
+
+	if err := db.Close(); err != nil {
+		logrus.Errorf("Error occured on db connection close: %s", err.Error())
+	}
 }
 
 func initConfig() error {

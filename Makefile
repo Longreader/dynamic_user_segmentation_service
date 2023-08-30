@@ -2,7 +2,10 @@ build:
 	sudo docker-compose build avito-app
 
 run:
-	sudo docker-compose up avito-app
+	docker-compose up -d avito-app
+
+stop:
+	docker-compose stop avito-app db
 
 test:
 	go test -v ./...
