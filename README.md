@@ -81,11 +81,11 @@ This is an list of needed software and how to install them.
 2. Install software above
   
 3. Write the folow command
-   ```
+   ```sh
    make build && make run
    ```
 4. If service runs for first time, migrations must be done:
-   ```
+   ```sh
    make migrate
    ```
 
@@ -96,17 +96,24 @@ This is an list of needed software and how to install them.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Whole API Endpoints avalieble at POSTMAN:
-```
+Whole <b>API Endpoints</b> avalieble at <b>POSTMAN</b>:
+```sh
 https://www.postman.com/crimson-resonance-324941/workspace/avitotech-intershiptest/collection/27188643-63e09760-9e57-43ea-8aa0-d9c6520ee754?action=share&creator=27188643
 ```
-As Service installed and runned swagger docs also avalieble at:
-```
+As Service installed and runned <b>swagger docs</b> also avalieble at:
+```sh
 http://SERVER_HOST:SERVER_PORT/swagger/index.html
+```
+To start service:
+```sh
+make build && make run
+```
+To stop service:
+```sh
+make stop
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- ROADMAP -->
@@ -118,6 +125,8 @@ http://SERVER_HOST:SERVER_PORT/swagger/index.html
 - [x] Extra task one
 - [ ] Extra task two
 - [x] Extra task three
+  - [ ] Integrate JWT tockens
+  - [ ] Integrate NoSQL base like Redis   
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
