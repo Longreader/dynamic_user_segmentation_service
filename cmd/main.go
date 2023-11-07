@@ -14,7 +14,7 @@ import (
 	dynamicusersegmentation "github.com/Longreader/dynamic_user_segmentation_service.git"
 	"github.com/Longreader/dynamic_user_segmentation_service.git/internal/handlers"
 	"github.com/Longreader/dynamic_user_segmentation_service.git/internal/repository"
-	"github.com/Longreader/dynamic_user_segmentation_service.git/service"
+	"github.com/Longreader/dynamic_user_segmentation_service.git/internal/service"
 	"github.com/spf13/viper"
 )
 

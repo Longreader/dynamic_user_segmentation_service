@@ -2,7 +2,7 @@ package handlers
 
 import (
 	_ "github.com/Longreader/dynamic_user_segmentation_service.git/docs"
-	"github.com/Longreader/dynamic_user_segmentation_service.git/service"
+	"github.com/Longreader/dynamic_user_segmentation_service.git/internal/service"
 	"github.com/gin-gonic/gin"
 
 	// _ "github.com/swaggo/echo-swagger/example/docs"
