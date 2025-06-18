@@ -25,7 +25,9 @@ func NewAuditStorage() *AuditStorage {
 
 func (a *AuditStorage) SendAuditInformation(date string) (string, error) {
 
-	dir := fmt.Sprintf("./storage/%s/", date)
+	cleanDate := filepath.Clean(date)
+
+	dir := fmt.Sprintf("./storage/%s/", cleanDate)
 
 	b := make([]byte, 6)
 	_, err := rand.Read(b)
