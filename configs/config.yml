@@ -6,4 +6,7 @@ db:
   port: "5432"
   dbname: "postgres"
   sslmode: "disable"
-  
+
+
+server:
+  token: "example"

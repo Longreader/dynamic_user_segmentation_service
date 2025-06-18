@@ -14,6 +14,6 @@ RUN chmod +x wait-for-postgres.sh
 
 # build go app
 RUN go mod download
-RUN go build -o avito-app ./cmd/main.go
+RUN go build -o dynamic_segmentation ./cmd/main.go
 
-CMD ["./avito-app"]
+CMD ["./dynamic_segmentation"]
