@@ -52,7 +52,12 @@ func (a *AuditStorage) SendAuditInformation(date string) (string, error) {
 	if err != nil {
 		logrus.Fatal("Error occured due creating CSV file:", err)
 	}
-	defer csvFile.Close()
+
+	defer func() {
+		if err = csvFile.Close(); err != nil {
+			logrus.Errorf("Error occured closing CSV file:", err)
+		}
+	}()
 
 	// Создаем писатель для записи в CSV файл
 	writer := csv.NewWriter(csvFile)
@@ -78,7 +83,6 @@ func (a *AuditStorage) SendAuditInformation(date string) (string, error) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		defer fileHandle.Close()
 
 		// Читаем строки из файла и записываем их в объединенный CSV-файл
 		reader := csv.NewReader(fileHandle)
@@ -88,16 +92,27 @@ func (a *AuditStorage) SendAuditInformation(date string) (string, error) {
 				break
 			}
 			if err != nil {
-				log.Fatal(err)
+				logrus.Errorf("Error during line read:", err)
+
+				return "", err
 			}
 
 			err = writer.Write(line)
 			if err != nil {
-				log.Fatal(err)
+				logrus.Error("Error due work with file", err)
+
+				return "", err
 			}
+		}
+
+		err = fileHandle.Close()
+		if err != nil {
+			logrus.Errorf("Error due closing file:", err)
+
+			return "", err
 		}
 	}
 
-	logrus.Debug("Audit confitmed")
+	logrus.Debug("Audit confirmed")
 	return hashName, nil
 }

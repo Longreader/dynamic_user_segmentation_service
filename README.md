@@ -4,7 +4,7 @@
 <h1 align="center"><b>Dynamic user segmentation service</b></h1>
 <div>
   <p align="center">
-    Dynamic user segmentation service for AvitoTech internship
+    Dynamic user segmentation service
   </p>
 </div>
 
@@ -114,23 +114,6 @@ make stop
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] API Service
-- [x] Swagger docs
-- [ ] Test covarage
-- [x] Extra task one
-- [ ] Extra task two
-- [x] Extra task three
-  - [ ] Integrate JWT tockens
-  - [ ] Integrate NoSQL base like Redis   
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- CONTACT -->

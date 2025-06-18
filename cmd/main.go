@@ -18,7 +18,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// @title           Swagger Avito Backend Junior API
+// @title           Swagger Backend API
 // @version         1.0
 // @description     This is a swagger docs for test API
 // @contact.name   Alexey Kirichek
@@ -39,20 +39,20 @@ func main() {
 		logrus.Fatalf("Error at load environment passwords: %s", err.Error())
 	}
 
-	db, err := repository.NewPostgresDB(repository.Config{
-		Host:     viper.GetString("db.host"),
-		Port:     viper.GetString("db.port"),
-		Username: viper.GetString("db.username"),
+	postgresDB, err := repository.NewPostgresDB(repository.Config{
+		Host:     viper.GetString("postgresDB.host"),
+		Port:     viper.GetString("postgresDB.port"),
+		Username: viper.GetString("postgresDB.username"),
 		Password: os.Getenv("DB_PASSWORD"),
-		DBName:   viper.GetString("db.dbname"),
-		SSLMode:  viper.GetString("db.sslmode"),
+		DBName:   viper.GetString("postgresDB.dbname"),
+		SSLMode:  viper.GetString("postgresDB.sslmode"),
 	})
 
 	if err != nil {
 		logrus.Fatalf("Error at database connection: %s", err.Error())
 	}
 
-	repositories := repository.NewRepository(db)
+	repositories := repository.NewRepository(postgresDB)
 	services := service.NewService(repositories)
 	h := handlers.NewHandler(services)
 
@@ -63,20 +63,22 @@ func main() {
 		}
 	}()
 
-	logrus.Print("AvitoApp Started")
+	logrus.Print("Dynamic User Segmentation Service Started")
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
-	logrus.Print("AvitoApp Shutting Down")
+	logrus.Print("Dynamic User Segmentation Service Shutting Down")
 
-	if err := srv.Shutdown(context.Background()); err != nil {
+	if err = srv.Shutdown(context.Background()); err != nil {
 		logrus.Errorf("Error occured on server shutting down: %s", err.Error())
 	}
 
-	if err := db.Close(); err != nil {
-		logrus.Errorf("Error occured on db connection close: %s", err.Error())
+	if postgresDB != nil {
+		if err = postgresDB.Close(); err != nil {
+			logrus.Errorf("Error occured on postgresDB connection close: %s", err.Error())
+		}
 	}
 }
 

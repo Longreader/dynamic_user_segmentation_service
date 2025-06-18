@@ -169,7 +169,7 @@ func (c *ComparisonPostgres) SetUserSegments(uss models.UserSetSegment) error {
 
 	toSet = uss.SegmentsSet
 	toDelete = uss.SegmentsDelete
-	userToSet = uss.UserId
+	userToSet = uss.UserID
 
 	userID, err = c.CreateUserIfNotExist(userToSet)
 	if err != nil {
@@ -216,7 +216,7 @@ func (c *ComparisonPostgres) SetUserSegments(uss models.UserSetSegment) error {
 	return nil
 }
 
-func (c *ComparisonPostgres) GetActiveSegmnents(usr models.User) ([]string, error) {
+func (c *ComparisonPostgres) GetActiveSegments(usr models.User) ([]string, error) {
 
 	var usrID int
 	var sgmtID int
@@ -224,7 +224,7 @@ func (c *ComparisonPostgres) GetActiveSegmnents(usr models.User) ([]string, erro
 	var sgmts []string
 	var err error
 
-	usrID, err = c.GetUserIfExist(usr.UserId)
+	usrID, err = c.GetUserIfExist(usr.UserID)
 
 	if err != nil {
 		return make([]string, 0), nil

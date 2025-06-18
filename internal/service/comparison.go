@@ -17,6 +17,6 @@ func (c *ComparisonService) SetUserSegments(uss models.UserSetSegment) error {
 	return c.repo.SetUserSegments(uss)
 }
 
-func (c *ComparisonService) GetActiveSegmnents(u models.User) ([]string, error) {
-	return c.repo.GetActiveSegmnents(u)
+func (c *ComparisonService) GetActiveSegments(u models.User) ([]string, error) {
+	return c.repo.GetActiveSegments(u)
 }

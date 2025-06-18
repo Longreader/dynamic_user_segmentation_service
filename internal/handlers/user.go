@@ -37,7 +37,7 @@ func (h *Handler) getUser(c *gin.Context) {
 		return
 	}
 
-	input.UserId = idInt
+	input.UserID = idInt
 
 	usrOut, err := h.services.UserInterface.GetUser(input)
 	if err != nil {
@@ -118,7 +118,7 @@ func (h *Handler) deleteUser(c *gin.Context) {
 		return
 	}
 
-	input.UserId = idInt
+	input.UserID = idInt
 
 	err = h.services.UserInterface.DeleteUser(input)
 	if err != nil {

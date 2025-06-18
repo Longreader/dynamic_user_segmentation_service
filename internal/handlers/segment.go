@@ -77,7 +77,7 @@ func (h *Handler) postSegment(c *gin.Context) {
 		}
 	}
 
-	if (input.Persent != 0) && (input.Persent <= 100) {
+	if (input.Percent != 0) && (input.Percent <= 100) {
 		usrs, err := h.services.UserInterface.GetRandUsers(input)
 		if err != nil {
 			newErrorResponse(c, http.StatusInternalServerError, err.Error())
@@ -86,7 +86,7 @@ func (h *Handler) postSegment(c *gin.Context) {
 		for _, usr := range usrs {
 			err := h.services.ComparisonInterface.SetUserSegments(models.UserSetSegment{
 				SegmentsSet: []string{input.Segment},
-				UserId:      usr,
+				UserID:      usr,
 			})
 			if err != nil {
 				newErrorResponse(c, http.StatusInternalServerError, err.Error())

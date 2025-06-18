@@ -5,7 +5,6 @@ import (
 	"github.com/Longreader/dynamic_user_segmentation_service.git/internal/service"
 	"github.com/gin-gonic/gin"
 
-	// _ "github.com/swaggo/echo-swagger/example/docs"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )

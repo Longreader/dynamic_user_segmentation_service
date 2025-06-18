@@ -54,10 +54,10 @@ func (h *Handler) postComarison(c *gin.Context) {
 	defer file.Close()
 
 	for _, i := range input.SegmentsSet {
-		file.WriteString(fmt.Sprintf("%d;%s;%s;%s;\n", input.UserId, i, "SET", time.Now().Format("1.2.06 3:4:5 -07 MST")))
+		file.WriteString(fmt.Sprintf("%d;%s;%s;%s;\n", input.UserID, i, "SET", time.Now().Format("1.2.06 3:4:5 -07 MST")))
 	}
 	for _, i := range input.SegmentsDelete {
-		file.WriteString(fmt.Sprintf("%d;%s;%s;%s;\n", input.UserId, i, "DELETE", time.Now().Format("1.2.06 3:4:5 -07 MST")))
+		file.WriteString(fmt.Sprintf("%d;%s;%s;%s;\n", input.UserID, i, "DELETE", time.Now().Format("1.2.06 3:4:5 -07 MST")))
 	}
 
 	c.JSON(http.StatusOK, map[string]interface{}{
@@ -95,16 +95,16 @@ func (h *Handler) getActive(c *gin.Context) {
 		return
 	}
 
-	input.UserId = idInt
+	input.UserID = idInt
 
-	smgts, err = h.services.ComparisonInterface.GetActiveSegmnents(input)
+	smgts, err = h.services.ComparisonInterface.GetActiveSegments(input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	output.Segments = smgts
-	output.UserId = input.UserId
+	output.UserID = input.UserID
 
 	c.JSON(http.StatusOK, output)
 

@@ -20,7 +20,7 @@ type UserInterface interface {
 
 type ComparisonInterface interface {
 	SetUserSegments(uss models.UserSetSegment) error
-	GetActiveSegmnents(u models.User) ([]string, error)
+	GetActiveSegments(u models.User) ([]string, error)
 }
 
 type AuditInterface interface {

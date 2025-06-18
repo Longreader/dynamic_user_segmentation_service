@@ -58,7 +58,7 @@ func (u *UserPostgres) GetRandomUsers(count int) ([]int, error) {
 func (u *UserPostgres) CreateUser(usr models.User) (int, error) {
 	var id int
 	query := fmt.Sprintf(`INSERT INTO %s (user_id) values ($1) RETURNING id`, usersTable)
-	row := u.db.QueryRow(query, usr.UserId)
+	row := u.db.QueryRow(query, usr.UserID)
 	if err := row.Scan(&id); err != nil {
 		return 0, err
 	}
@@ -68,7 +68,7 @@ func (u *UserPostgres) CreateUser(usr models.User) (int, error) {
 func (u *UserPostgres) GetUser(usr models.User) (int, error) {
 	var usrIdOut int
 	query := fmt.Sprintf("SELECT user_id FROM %s WHERE user_id=$1", usersTable)
-	row := u.db.QueryRow(query, usr.UserId)
+	row := u.db.QueryRow(query, usr.UserID)
 	if err := row.Scan(&usrIdOut); err != nil {
 		return 0, err
 	}
@@ -77,7 +77,7 @@ func (u *UserPostgres) GetUser(usr models.User) (int, error) {
 
 func (u *UserPostgres) DeleteUser(usr models.User) error {
 	query := fmt.Sprintf("DELETE FROM %s WHERE user_id=$1", usersTable)
-	_ = u.db.QueryRow(query, usr.UserId)
+	_ = u.db.QueryRow(query, usr.UserID)
 	return nil
 }
 
@@ -93,7 +93,7 @@ func (u *UserPostgres) GetRandUsers(s models.Segment) ([]int, error) {
 		return make([]int, 0), err
 	}
 
-	total = float64(countUsrs) * (float64(s.Persent) / float64(100))
+	total = float64(countUsrs) * (float64(s.Percent) / float64(100))
 
 	usrs, err = u.GetRandomUsers(int(math.Round(total)))
 
